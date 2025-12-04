@@ -61,10 +61,10 @@ export default function SortableCategorySection({
       <div
         {...attributes}
         {...listeners}
-        className="flex items-center gap-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-t-sm cursor-grab active:cursor-grabbing"
+        className="flex items-center gap-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-4 rounded-t-lg cursor-grab active:cursor-grabbing touch-none select-none"
       >
         <svg
-          className="w-5 h-5 text-white/70"
+          className="w-6 h-6 text-white/90 flex-shrink-0"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -72,7 +72,7 @@ export default function SortableCategorySection({
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth={2}
+            strokeWidth={2.5}
             d="M4 8h16M4 16h16"
           />
         </svg>
