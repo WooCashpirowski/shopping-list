@@ -23,11 +23,11 @@ export default function CategoriesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-gray-50 p-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-start justify-between mb-4">
             <h1 className="text-3xl font-bold text-gray-900">Zarządzanie kategoriami</h1>
             <Link
               href="/"
@@ -39,19 +39,16 @@ export default function CategoriesPage() {
 
             </Link>
           </div>
-          <p className="text-gray-600">
-            Dodawaj, edytuj i usuwaj kategorie oraz zarządzaj słowami kluczowymi dla automatycznej klasyfikacji produktów.
-          </p>
         </div>
 
         {/* Add Category Form */}
-        <div className="mb-8 bg-white rounded-lg shadow p-6">
+        <div className="mb-8 bg-white rounded-lg shadow p-4">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">Dodaj nową kategorię</h2>
           <AddCategoryForm />
         </div>
 
         {/* Categories List */}
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white rounded-lg shadow p-4">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
             Kategorie ({categories.length})
           </h2>

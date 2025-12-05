@@ -24,7 +24,7 @@ export default function AddItemForm({
   onDeleteAll,
 }: AddItemFormProps) {
   return (
-    <form onSubmit={onSubmit} className="bg-white p-4 rounded-sm shadow">
+    <form onSubmit={onSubmit} className="bg-gray-50 p-4 rounded-sm shadow-lg/20">
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-xl font-semibold">Dodaj nowy produkt</h2>
         {itemCount > 0 && (
@@ -32,7 +32,7 @@ export default function AddItemForm({
             type="button"
             onClick={onDeleteAll}
             disabled={isDeleting}
-            className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600 disabled:bg-gray-400"
+            className="px-3 py-1 text-sm bg-linear-65 from-red-500 to-pink-500 text-white rounded hover:bg-red-600 disabled:bg-gray-400"
           >
             Wyczyść ({itemCount})
           </button>
@@ -44,19 +44,19 @@ export default function AddItemForm({
           placeholder="Nazwa produktu"
           value={itemName}
           onChange={(e) => onItemNameChange(e.target.value)}
-          className="flex-1 min-w-[200px] px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="flex-1 min-w-[200px] px-2 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <input
           type="text"
-          placeholder="Ilość"
+          placeholder="ilość"
           value={itemQty}
           onChange={(e) => onItemQtyChange(e.target.value)}
-          className="w-24 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="size-11 px-2 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs"
         />
         <button
           type="submit"
           disabled={isAdding}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center justify-center"
+          className="px-3 py-2 bg-linear-to-t from-sky-500 to-indigo-500 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center justify-center"
           title="Dodaj produkt"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

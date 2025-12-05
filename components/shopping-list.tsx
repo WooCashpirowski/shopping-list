@@ -167,11 +167,8 @@ export default function ShoppingList() {
         <h1 className="text-2xl font-bold text-gray-900">Lista zakupów</h1>
         <Link
           href="/categories"
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-sm transition-colors"
+          className="py-2 text-sm font-medium bg-linear-to-t from-sky-500 to-indigo-500 text-white hover:text-blue-700 hover:bg-blue-600 border-1 border-blue-600 px-2 rounded-sm transition-colors"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-          </svg>
           Zarządzaj kategoriami
         </Link>
       </div>

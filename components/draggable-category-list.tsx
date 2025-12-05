@@ -65,7 +65,7 @@ export default function DraggableCategoryList({
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 250,
+        delay: 50,
         tolerance: 5,
       },
     }),
