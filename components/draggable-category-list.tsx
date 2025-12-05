@@ -24,35 +24,17 @@ import SortableCategorySection from './sortable-category-section';
 
 interface DraggableCategoryListProps {
   groupedItems: Record<string, Item[]>;
-  editingId: string | null;
-  editName: string;
-  editQty: string;
-  editCategory: string;
   categories: Category[];
   onToggleDone: (id: string, done: boolean) => void;
   onStartEdit: (item: Item) => void;
-  onEditNameChange: (value: string) => void;
-  onEditQtyChange: (value: string) => void;
-  onEditCategoryChange: (value: string) => void;
-  onSaveEdit: (id: string) => void;
-  onCancelEdit: () => void;
   onDelete: (id: string) => void;
 }
 
 export default function DraggableCategoryList({
   groupedItems,
-  editingId,
-  editName,
-  editQty,
-  editCategory,
   categories,
   onToggleDone,
   onStartEdit,
-  onEditNameChange,
-  onEditQtyChange,
-  onEditCategoryChange,
-  onSaveEdit,
-  onCancelEdit,
   onDelete,
 }: DraggableCategoryListProps) {
   const updatePositionsMutation = useUpdateCategoryPositions();
@@ -139,18 +121,9 @@ export default function DraggableCategoryList({
               key={category.id}
               category={category}
               items={groupedItems[category.name] || []}
-              editingId={editingId}
-              editName={editName}
-              editQty={editQty}
-              editCategory={editCategory}
               categories={categories}
               onToggleDone={onToggleDone}
               onStartEdit={onStartEdit}
-              onEditNameChange={onEditNameChange}
-              onEditQtyChange={onEditQtyChange}
-              onEditCategoryChange={onEditCategoryChange}
-              onSaveEdit={onSaveEdit}
-              onCancelEdit={onCancelEdit}
               onDelete={onDelete}
             />
           ))}

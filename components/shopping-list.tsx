@@ -22,6 +22,8 @@ import { addItemWithLearning, updateItemWithLearning, groupItemsByCategory } fro
 import AddItemForm from './add-item-form';
 import DraggableCategoryList from './draggable-category-list';
 import CategoryModal from './category-modal';
+import EditItemModal from './edit-item-modal';
+import type { Item } from '@/types/database';
 
 const USER_NAME = 'Użytkownik'; // W produkcji pobrać z autoryzacji
 
@@ -108,12 +110,12 @@ export default function ShoppingList() {
     dispatch({ type: 'RESET_NEW_ITEM' });
   };
 
-  const handleUpdateItem = async (id: string) => {
-    if (!state.editName.trim()) return;
+  const handleUpdateItem = async (id: string, name: string, qty: string, category: string) => {
+    if (!name.trim()) return;
 
-    const { category } = await updateItemWithLearning(
-      state.editName,
-      state.editCategory,
+    const { category: finalCategory } = await updateItemWithLearning(
+      name,
+      category,
       categories,
       (categoryId, keywords) => updateKeywordsMutation.mutate({ categoryId, keywords })
     );
@@ -121,16 +123,16 @@ export default function ShoppingList() {
     updateItemMutation.mutate({
       id,
       update: {
-        name: state.editName.trim(),
-        qty: state.editQty.trim() || null,
-        category,
+        name: name.trim(),
+        qty: qty.trim() || null,
+        category: finalCategory,
       },
     });
 
     dispatch({ type: 'CANCEL_EDITING' });
   };
 
-  const handleStartEditing = (item: any) => {
+  const handleStartEditing = (item: Item) => {
     dispatch({
       type: 'START_EDITING',
       payload: {
@@ -188,18 +190,9 @@ export default function ShoppingList() {
       {items.length > 0 ? (
         <DraggableCategoryList
           groupedItems={groupedItems}
-          editingId={state.editingId}
-          editName={state.editName}
-          editQty={state.editQty}
-          editCategory={state.editCategory}
           categories={categories}
           onToggleDone={(id, done) => toggleDoneMutation.mutate({ id, done })}
           onStartEdit={handleStartEditing}
-          onEditNameChange={(value) => dispatch({ type: 'SET_EDIT_NAME', payload: value })}
-          onEditQtyChange={(value) => dispatch({ type: 'SET_EDIT_QTY', payload: value })}
-          onEditCategoryChange={(value) => dispatch({ type: 'SET_EDIT_CATEGORY', payload: value })}
-          onSaveEdit={handleUpdateItem}
-          onCancelEdit={() => dispatch({ type: 'CANCEL_EDITING' })}
           onDelete={(id) => deleteItemMutation.mutate(id)}
         />
       ) : (
@@ -215,6 +208,15 @@ export default function ShoppingList() {
         onSelectCategory={handleCategorySelection}
         onClose={() => dispatch({ type: 'HIDE_CATEGORY_MODAL' })}
       />
+
+      {state.editingId && (
+        <EditItemModal
+          item={items.find(item => item.id === state.editingId)!}
+          categories={categories}
+          onSave={handleUpdateItem}
+          onClose={() => dispatch({ type: 'CANCEL_EDITING' })}
+        />
+      )}
     </div>
   );
 }

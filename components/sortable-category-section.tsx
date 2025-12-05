@@ -8,36 +8,18 @@ import type { Item, Category } from '@/types/database';
 interface SortableCategorySectionProps {
   category: Category & { displayName: string };
   items: Item[];
-  editingId: string | null;
-  editName: string;
-  editQty: string;
-  editCategory: string;
   categories: Category[];
   onToggleDone: (id: string, done: boolean) => void;
   onStartEdit: (item: Item) => void;
-  onEditNameChange: (value: string) => void;
-  onEditQtyChange: (value: string) => void;
-  onEditCategoryChange: (value: string) => void;
-  onSaveEdit: (id: string) => void;
-  onCancelEdit: () => void;
   onDelete: (id: string) => void;
 }
 
 export default function SortableCategorySection({
   category,
   items,
-  editingId,
-  editName,
-  editQty,
-  editCategory,
   categories,
   onToggleDone,
   onStartEdit,
-  onEditNameChange,
-  onEditQtyChange,
-  onEditCategoryChange,
-  onSaveEdit,
-  onCancelEdit,
   onDelete,
 }: SortableCategorySectionProps) {
   const {
@@ -85,18 +67,9 @@ export default function SortableCategorySection({
             <ItemRow
               key={item.id}
               item={item}
-              isEditing={editingId === item.id}
-              editName={editName}
-              editQty={editQty}
-              editCategory={editCategory}
               categories={categories}
               onToggleDone={onToggleDone}
               onStartEdit={onStartEdit}
-              onEditNameChange={onEditNameChange}
-              onEditQtyChange={onEditQtyChange}
-              onEditCategoryChange={onEditCategoryChange}
-              onSaveEdit={onSaveEdit}
-              onCancelEdit={onCancelEdit}
               onDelete={onDelete}
             />
           ))}
