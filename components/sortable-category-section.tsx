@@ -8,7 +8,6 @@ import type { Item, Category } from '@/types/database';
 interface SortableCategorySectionProps {
   category: Category & { displayName: string };
   items: Item[];
-  categories: Category[];
   onToggleDone: (id: string, done: boolean) => void;
   onStartEdit: (item: Item) => void;
   onDelete: (id: string) => void;
@@ -17,7 +16,6 @@ interface SortableCategorySectionProps {
 export default function SortableCategorySection({
   category,
   items,
-  categories,
   onToggleDone,
   onStartEdit,
   onDelete,
@@ -40,7 +38,7 @@ export default function SortableCategorySection({
   return (
     <div ref={setNodeRef} style={style} className="bg-white rounded-lg shadow-md flex overflow-hidden">
       {/* Draggable anchor */}
-      <div className="cursor-grab active:cursor-grabbing touch-none select-none flex justify-center items-center px-1 bg-linear-to-b from-sky-500 to-indigo-100 rounded-tl-sm" {...attributes} {...listeners}>
+      <div className="cursor-grab active:cursor-grabbing touch-none select-none flex justify-center items-center px-1 bg-linear-to-b from-sky-300 to-indigo-100 rounded-tl-sm" {...attributes} {...listeners}>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path d="M8.75 6.75C8.33579 6.75 8 6.41421 8 6C8 5.58579 8.33579 5.25 8.75 5.25C9.16421 5.25 9.5 5.58579 9.5 6C9.5 6.41421 9.16421 6.75 8.75 6.75Z" stroke="#565b64ff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           <path d="M8.75 12.75C8.33579 12.75 8 12.4142 8 12C8 11.5858 8.33579 11.25 8.75 11.25C9.16421 11.25 9.5 11.5858 9.5 12C9.5 12.4142 9.16421 12.75 8.75 12.75Z" stroke="#565b64ff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -67,7 +65,6 @@ export default function SortableCategorySection({
             <ItemRow
               key={item.id}
               item={item}
-              categories={categories}
               onToggleDone={onToggleDone}
               onStartEdit={onStartEdit}
               onDelete={onDelete}

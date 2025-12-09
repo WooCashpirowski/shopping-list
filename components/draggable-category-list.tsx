@@ -121,7 +121,6 @@ export default function DraggableCategoryList({
               key={category.id}
               category={category}
               items={groupedItems[category.name] || []}
-              categories={categories}
               onToggleDone={onToggleDone}
               onStartEdit={onStartEdit}
               onDelete={onDelete}

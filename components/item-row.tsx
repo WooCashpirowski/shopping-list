@@ -4,7 +4,6 @@ import type { Item, Category } from '@/types/database';
 
 interface ItemRowProps {
   item: Item;
-  categories: Category[];
   onToggleDone: (id: string, done: boolean) => void;
   onStartEdit: (item: Item) => void;
   onDelete: (id: string) => void;
@@ -12,7 +11,6 @@ interface ItemRowProps {
 
 export default function ItemRow({
   item,
-  categories,
   onToggleDone,
   onStartEdit,
   onDelete,
