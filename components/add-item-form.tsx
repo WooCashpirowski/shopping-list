@@ -3,41 +3,22 @@
 interface AddItemFormProps {
   itemName: string;
   itemQty: string;
-  itemCount: number;
   isAdding: boolean;
-  isDeleting: boolean;
   onItemNameChange: (value: string) => void;
   onItemQtyChange: (value: string) => void;
   onSubmit: (e: React.FormEvent) => void;
-  onDeleteAll: () => void;
 }
 
 export default function AddItemForm({
   itemName,
   itemQty,
-  itemCount,
   isAdding,
-  isDeleting,
   onItemNameChange,
   onItemQtyChange,
   onSubmit,
-  onDeleteAll,
 }: AddItemFormProps) {
   return (
-    <form onSubmit={onSubmit} className="bg-gray-50 p-4 rounded-sm shadow-lg/20">
-      <div className="flex justify-between items-center mb-3">
-        <h2 className="text-xl font-semibold">Dodaj nowy produkt</h2>
-        {itemCount > 0 && (
-          <button
-            type="button"
-            onClick={onDeleteAll}
-            disabled={isDeleting}
-            className="px-3 py-1 text-sm bg-linear-65 from-red-500 to-pink-500 text-white rounded hover:bg-red-600 disabled:bg-gray-400"
-          >
-            Wyczyść ({itemCount})
-          </button>
-        )}
-      </div>
+    <form onSubmit={onSubmit} className="bg-gray-50 p-4 rounded-lg shadow-lg/20">
       <div className="flex gap-2 flex-wrap">
         <input
           type="text"

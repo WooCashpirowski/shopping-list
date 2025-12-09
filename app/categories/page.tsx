@@ -14,9 +14,32 @@ export default function CategoriesPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-8">
+      <div className="min-h-screen bg-gray-50 p-4">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center">Ładowanie...</div>
+          {/* Header Skeleton */}
+          <div className="mb-8">
+            <div className="flex items-start justify-between mb-4 animate-pulse">
+              <div className="h-9 w-80 bg-gray-200 rounded"></div>
+              <div className="w-12 h-10 bg-gray-200 rounded-lg"></div>
+            </div>
+          </div>
+
+          {/* Add Category Form Skeleton */}
+          <div className="mb-8 bg-white rounded-lg shadow p-4 animate-pulse">
+            <div className="h-7 w-56 bg-gray-200 rounded mb-4"></div>
+            <div className="space-y-4">
+              <div>
+                <div className="h-4 w-32 bg-gray-200 rounded mb-1"></div>
+                <div className="h-10 w-full bg-gray-200 rounded-lg"></div>
+              </div>
+              <div>
+                <div className="h-4 w-48 bg-gray-200 rounded mb-1"></div>
+                <div className="h-20 w-full bg-gray-200 rounded-lg"></div>
+                <div className="h-3 w-96 bg-gray-100 rounded mt-1"></div>
+              </div>
+              <div className="h-10 w-full bg-gray-200 rounded-lg"></div>
+            </div>
+          </div>
         </div>
       </div>
     );

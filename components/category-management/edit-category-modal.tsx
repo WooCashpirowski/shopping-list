@@ -120,7 +120,7 @@ export default function EditCategoryModal({ category, onClose }: EditCategoryMod
             </div>
 
             {/* Footer */}
-            <div className="flex gap-3 p-6 border-t bg-gray-50">
+            <div className="flex gap-3 p-6 border-t bg-gray-50 rounded-b-lg">
               <button
                 type="button"
                 onClick={onClose}
@@ -131,7 +131,7 @@ export default function EditCategoryModal({ category, onClose }: EditCategoryMod
               <button
                 type="submit"
                 disabled={updateCategoryMutation.isPending}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 font-medium"
+                className="flex-1 px-4 py-2 bg-linear-to-t from-sky-500 to-indigo-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 font-medium"
               >
                 {updateCategoryMutation.isPending ? 'Zapisywanie...' : 'Zapisz'}
               </button>

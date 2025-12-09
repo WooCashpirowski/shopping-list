@@ -53,7 +53,7 @@ export default function ShoppingList() {
           filter: `shop_id=eq.${SHOP_ID_CONSTANT}`,
         },
         (payload) => {
-          console.log('Realtime update:', payload);
+          console.info('Realtime update:', payload);
           queryClient.invalidateQueries({ queryKey: ['items', SHOP_ID_CONSTANT] });
         }
       )
@@ -159,11 +159,42 @@ export default function ShoppingList() {
   const groupedItems = groupItemsByCategory(items);
 
   if (isLoading) {
-    return <div className="text-center py-8">Ładowanie...</div>;
+    return (
+      <div className="space-y-4 pb-[40px]">
+        {/* Header Skeleton */}
+        <div className="flex justify-between items-center animate-pulse">
+          <div className="h-8 w-48 bg-gray-200 rounded"></div>
+          <div className="h-9 w-24 bg-gray-200 rounded-sm"></div>
+        </div>
+
+        {/* Form Skeleton */}
+        <div className="bg-white p-4 rounded-lg shadow animate-pulse">
+          <div className="flex gap-2 flex-wrap">
+            <div className="flex-1 min-w-[200px] h-10 bg-gray-200 rounded"></div>
+            <div className="w-12 h-10 bg-gray-200 rounded"></div>
+            <div className="w-12 h-10 bg-gray-200 rounded"></div>
+          </div>
+        </div>
+
+        {/* Categories Skeleton */}
+        <div className="space-y-2">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="bg-white rounded-lg shadow-md animate-pulse">
+              <div className="h-12 bg-gray-200 rounded-t-lg"></div>
+              <div className="p-4 space-y-3">
+                <div className="h-8 bg-gray-100 rounded"></div>
+                <div className="h-8 bg-gray-100 rounded"></div>
+                <div className="h-8 bg-gray-100 rounded w-3/4"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 pb-[40px]">
       {/* Header with link to categories management */}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900">Lista zakupów</h1>
@@ -171,20 +202,17 @@ export default function ShoppingList() {
           href="/categories"
           className="py-2 text-sm font-medium bg-linear-to-t from-sky-500 to-indigo-500 text-white hover:text-blue-700 hover:bg-blue-600 border-1 border-blue-600 px-2 rounded-sm transition-colors"
         >
-          Zarządzaj kategoriami
+          Kategorie
         </Link>
       </div>
 
       <AddItemForm
         itemName={state.newItemName}
         itemQty={state.newItemQty}
-        itemCount={items.length}
         isAdding={addItemMutation.isPending}
-        isDeleting={deleteAllItemsMutation.isPending}
         onItemNameChange={(value) => dispatch({ type: 'SET_NEW_ITEM_NAME', payload: value })}
         onItemQtyChange={(value) => dispatch({ type: 'SET_NEW_ITEM_QTY', payload: value })}
         onSubmit={handleAddItem}
-        onDeleteAll={handleDeleteAllItems}
       />
 
       {items.length > 0 ? (
@@ -197,7 +225,7 @@ export default function ShoppingList() {
         />
       ) : (
         <div className="text-center py-8 text-gray-500">
-          Brak produktów. Dodaj pierwszy produkt powyżej!
+          Dodaj pierwszy produkt
         </div>
       )}
 
@@ -216,6 +244,18 @@ export default function ShoppingList() {
           onSave={handleUpdateItem}
           onClose={() => dispatch({ type: 'CANCEL_EDITING' })}
         />
+      )}
+      {items.length > 0 && (
+        <div className='fixed bottom-0 left-0 py-3 px-4 w-full flex bg-linear-0 from-sky-200 to-white'>
+          <button
+            type="button"
+            onClick={handleDeleteAllItems}
+            disabled={deleteAllItemsMutation.isPending}
+            className="px-3 py-1 text-sm bg-linear-65 from-red-500 to-pink-500 text-white rounded hover:bg-red-600 disabled:bg-gray-400"
+          >
+            Wyczyść ({items.length})
+          </button>
+        </div>
       )}
     </div>
   );
