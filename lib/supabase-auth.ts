@@ -7,8 +7,8 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase environment variables');
 }
 
-// Client with auth persistence for authenticated requests
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+// Client with auth persistence
+export const supabaseAuth = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
