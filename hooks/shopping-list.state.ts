@@ -9,6 +9,7 @@ export interface ShoppingListState {
   editCategory: string;
   showCategoryModal: boolean;
   pendingItem: { name: string; qty: string } | null;
+  showDeleteConfirmation: boolean;
 }
 
 type Action =
@@ -21,7 +22,9 @@ type Action =
   | { type: 'SET_EDIT_CATEGORY'; payload: string }
   | { type: 'CANCEL_EDITING' }
   | { type: 'SHOW_CATEGORY_MODAL'; payload: { name: string; qty: string } }
-  | { type: 'HIDE_CATEGORY_MODAL' };
+  | { type: 'HIDE_CATEGORY_MODAL' }
+  | { type: 'SHOW_DELETE_CONFIRMATION' }
+  | { type: 'HIDE_DELETE_CONFIRMATION' };
 
 const initialState: ShoppingListState = {
   newItemName: '',
@@ -32,6 +35,7 @@ const initialState: ShoppingListState = {
   editCategory: '',
   showCategoryModal: false,
   pendingItem: null,
+  showDeleteConfirmation: false,
 };
 
 function shoppingListReducer(state: ShoppingListState, action: Action): ShoppingListState {
@@ -84,6 +88,18 @@ function shoppingListReducer(state: ShoppingListState, action: Action): Shopping
         ...state,
         showCategoryModal: false,
         pendingItem: null,
+      };
+    
+    case 'SHOW_DELETE_CONFIRMATION':
+      return {
+        ...state,
+        showDeleteConfirmation: true,
+      };
+    
+    case 'HIDE_DELETE_CONFIRMATION':
+      return {
+        ...state,
+        showDeleteConfirmation: false,
       };
     
     default:

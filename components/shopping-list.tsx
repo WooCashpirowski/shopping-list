@@ -25,6 +25,7 @@ import AddItemForm from './add-item-form';
 import DraggableCategoryList from './draggable-category-list';
 import CategoryModal from './category-modal';
 import EditItemModal from './edit-item-modal';
+import ConfirmationModal from './confirmation-modal';
 import type { Item } from '@/types/database';
 
 const USER_NAME = 'Użytkownik'; // W produkcji pobrać z autoryzacji
@@ -149,14 +150,12 @@ export default function ShoppingList() {
 
   const handleDeleteAllItems = () => {
     if (items.length === 0) return;
-    
-    const confirmed = window.confirm(
-      `Czy na pewno chcesz usunąć wszystkie produkty (${items.length})? Tej operacji nie można cofnąć.`
-    );
-    
-    if (confirmed) {
-      deleteAllItemsMutation.mutate();
-    }
+    dispatch({ type: 'SHOW_DELETE_CONFIRMATION' });
+  };
+
+  const handleConfirmDeleteAll = () => {
+    deleteAllItemsMutation.mutate();
+    dispatch({ type: 'HIDE_DELETE_CONFIRMATION' });
   };
 
   const groupedItems = groupItemsByCategory(items);
@@ -273,6 +272,18 @@ export default function ShoppingList() {
           </button>
         </div>
       )}
+
+      <ConfirmationModal
+        isOpen={state.showDeleteConfirmation}
+        title="Wyczyść listę zakupów"
+        message={`Czy na pewno chcesz usunąć wszystkie produkty (${items.length})? Tej operacji nie można cofnąć.`}
+        confirmText="Usuń wszystko"
+        cancelText="Anuluj"
+        variant="danger"
+        onConfirm={handleConfirmDeleteAll}
+        onCancel={() => dispatch({ type: 'HIDE_DELETE_CONFIRMATION' })}
+        isLoading={deleteAllItemsMutation.isPending}
+      />
     </div>
   );
 }

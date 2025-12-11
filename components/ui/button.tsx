@@ -13,7 +13,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const variantStyles = {
       primary: 'bg-gradient-to-t from-sky-500 to-indigo-500 text-white hover:from-blue-600 hover:to-blue-700',
       secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300',
-      danger: 'bg-red-500 text-white hover:bg-red-600',
+      danger: 'bg-linear-65 from-red-500 to-pink-500 text-white hover:bg-red-600',
     };
     
     const sizeStyles = {

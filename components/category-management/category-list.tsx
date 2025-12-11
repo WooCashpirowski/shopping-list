@@ -1,9 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import type { Category } from '@/types/database';
 import Button from '@/components/ui/button';
+import ConfirmationModal from '@/components/confirmation-modal';
 
 interface CategoryListProps {
   categories: Category[];
@@ -12,6 +14,7 @@ interface CategoryListProps {
 
 export default function CategoryList({ categories, onEdit }: CategoryListProps) {
   const queryClient = useQueryClient();
+  const [categoryToDelete, setCategoryToDelete] = useState<Category | null>(null);
 
   const deleteCategoryMutation = useMutation({
     mutationFn: async (categoryId: string) => {
@@ -36,8 +39,13 @@ export default function CategoryList({ categories, onEdit }: CategoryListProps) 
   });
 
   const handleDelete = (category: Category) => {
-    if (window.confirm(`Czy na pewno chcesz usunąć kategorię "${category.name}"? Produkty z tej kategorii zostaną przeniesione do "Inne".`)) {
-      deleteCategoryMutation.mutate(category.id);
+    setCategoryToDelete(category);
+  };
+
+  const handleConfirmDelete = () => {
+    if (categoryToDelete) {
+      deleteCategoryMutation.mutate(categoryToDelete.id);
+      setCategoryToDelete(null);
     }
   };
 
@@ -100,6 +108,18 @@ export default function CategoryList({ categories, onEdit }: CategoryListProps) 
           </div>
         </div>
       ))}
+
+      <ConfirmationModal
+        isOpen={categoryToDelete !== null}
+        title="Usuń kategorię"
+        message={`Czy na pewno chcesz usunąć kategorię "${categoryToDelete?.name}"? Produkty z tej kategorii zostaną przeniesione do "Inne".`}
+        confirmText="Usuń kategorię"
+        cancelText="Anuluj"
+        variant="danger"
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setCategoryToDelete(null)}
+        isLoading={deleteCategoryMutation.isPending}
+      />
     </div>
   );
 }
