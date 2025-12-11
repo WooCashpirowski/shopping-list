@@ -1,6 +1,6 @@
 'use client';
 
-import type { Item, Category } from '@/types/database';
+import type { Item } from '@/types/database';
 
 interface ItemRowProps {
   item: Item;

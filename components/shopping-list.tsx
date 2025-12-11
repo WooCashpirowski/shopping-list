@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
 import type { RealtimeChannel } from '@supabase/supabase-js';
 import Link from 'next/link';
+import Button from '@/components/ui/button';
 import { useShoppingListState } from '@/hooks/shopping-list.state';
 import {
   useCategories,
@@ -204,11 +205,10 @@ export default function ShoppingList() {
           {user && <p className="text-sm text-gray-600">{user.email}</p>}
         </div>
         <div className="flex gap-2">
-          <Link
-            href="/categories"
-            className="py-2 text-sm font-medium bg-linear-to-t from-sky-500 to-indigo-500 text-white hover:text-blue-700 hover:bg-blue-600 border-1 border-blue-600 px-2 rounded-sm transition-colors"
-          >
-            Kategorie
+          <Link href="/categories">
+            <Button size="md" className="py-2 text-sm rounded-sm h-full">
+              Kategorie
+            </Button>
           </Link>
           <button
             onClick={() => signOut()}

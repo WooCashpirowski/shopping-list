@@ -3,6 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import type { Category } from '@/types/database';
+import Button from '@/components/ui/button';
 
 interface CategoryListProps {
   categories: Category[];
@@ -74,16 +75,17 @@ export default function CategoryList({ categories, onEdit }: CategoryListProps) 
           </div>
           
           <div className="flex -my-4 -mr-4 ml-2">
-            <button
+            <Button
               type='button'
               onClick={() => onEdit(category)}
-              className="px-3 py-1 text-sm font-medium bg-linear-to-t from-sky-500 to-indigo-500 text-white mr-0.25"
+              size="sm"
+              className="mr-0.25 rounded-none"
               title='Edytuj'
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
               </svg>
-            </button>
+            </Button>
             <button
               type='button'
               onClick={() => handleDelete(category)}

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import type { Item, Category } from '@/types/database';
+import Button from '@/components/ui/button';
 
 interface EditItemModalProps {
   item: Item;
@@ -114,12 +115,9 @@ export default function EditItemModal({
               >
                 Anuluj
               </button>
-              <button
-                type="submit"
-                className="flex-1 px-4 py-2 bg-linear-to-t from-sky-500 to-indigo-500 text-white rounded-lg hover:bg-blue-700 font-medium"
-              >
+              <Button type="submit" className="flex-1">
                 Zapisz
-              </button>
+              </Button>
             </div>
           </form>
         </DialogPanel>

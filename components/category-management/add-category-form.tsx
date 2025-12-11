@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
+import Button from '@/components/ui/button';
 
 export default function AddCategoryForm() {
   const [name, setName] = useState('');
@@ -70,13 +71,9 @@ export default function AddCategoryForm() {
         </p>
       </div>
 
-      <button
-        type="submit"
-        disabled={addCategoryMutation.isPending}
-        className="w-full px-4 py-2 bg-linear-to-t from-sky-500 to-indigo-500 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
-      >
+      <Button type="submit" disabled={addCategoryMutation.isPending} fullWidth>
         {addCategoryMutation.isPending ? 'Dodawanie...' : 'Dodaj kategorię'}
-      </button>
+      </Button>
 
       {addCategoryMutation.isError && (
         <p className="text-sm text-red-600">

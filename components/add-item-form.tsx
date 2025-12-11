@@ -1,5 +1,7 @@
 'use client';
 
+import Button from '@/components/ui/button';
+
 interface AddItemFormProps {
   itemName: string;
   itemQty: string;
@@ -34,16 +36,16 @@ export default function AddItemForm({
           onChange={(e) => onItemQtyChange(e.target.value)}
           className="size-11 px-2 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs"
         />
-        <button
+        <Button
           type="submit"
           disabled={isAdding}
-          className="px-3 py-2 bg-linear-to-t from-sky-500 to-indigo-500 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center justify-center"
+          className="px-3 py-2 rounded flex items-center justify-center"
           title="Dodaj produkt"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
-        </button>
+        </Button>
       </div>
     </form>
   );
