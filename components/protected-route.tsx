@@ -1,32 +1,30 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading, signOut } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (!loading && !user && pathname !== '/login') {
       router.push('/login');
       return;
     }
 
-    // Check if user's email is in the allowed list
     if (!loading && user) {
       const allowedEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || [];
       const userEmail = user.email?.toLowerCase() || '';
 
       if (allowedEmails.length > 0 && !allowedEmails.includes(userEmail)) {
-        // User authenticated but not in allowed list - sign them out
         signOut().then(() => router.push('/login'));
       }
     }
-  }, [user, loading, router, signOut]);
+  }, [user, loading, router, signOut, pathname]);
 
-  // Show loading state
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
@@ -38,7 +36,6 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
     );
   }
 
-  // Don't render children until authenticated
   if (!user) {
     return null;
   }

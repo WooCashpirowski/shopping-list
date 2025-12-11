@@ -7,7 +7,8 @@ import { supabaseAuth } from '@/lib/supabase-auth';
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  signInWithMagicLink: (email: string) => Promise<{ error: Error | null }>;
+  signInWithPassword: (email: string, password: string) => Promise<{ error: Error | null }>;
+  signUp: (email: string, password: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
 }
 
@@ -18,7 +19,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check active session
     supabaseAuth.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       setLoading(false);
@@ -35,21 +35,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  const signInWithMagicLink = async (email: string) => {
+  const checkEmailAllowed = (email: string): boolean => {
+    const allowedEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || [];
+    const normalizedEmail = email.trim().toLowerCase();
+    return allowedEmails.length === 0 || allowedEmails.includes(normalizedEmail);
+  };
+
+  const signInWithPassword = async (email: string, password: string) => {
     try {
-      // Check if email is in allowed list
-      const allowedEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || [];
-      const normalizedEmail = email.trim().toLowerCase();
-      
-      if (allowedEmails.length > 0 && !allowedEmails.includes(normalizedEmail)) {
+      if (!checkEmailAllowed(email)) {
         return { error: new Error('Ten adres email nie ma dostępu do aplikacji.') };
       }
 
-      const { error } = await supabaseAuth.auth.signInWithOtp({
+      const { error } = await supabaseAuth.auth.signInWithPassword({
         email,
-        options: {
-          emailRedirectTo: typeof window !== 'undefined' ? window.location.origin : undefined,
-        },
+        password,
+      });
+      return { error };
+    } catch (error) {
+      return { error: error as Error };
+    }
+  };
+
+  const signUp = async (email: string, password: string) => {
+    try {
+      if (!checkEmailAllowed(email)) {
+        return { error: new Error('Ten adres email nie ma dostępu do aplikacji.') };
+      }
+
+      const { error } = await supabaseAuth.auth.signUp({
+        email,
+        password,
       });
       return { error };
     } catch (error) {
@@ -62,7 +78,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithMagicLink, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signInWithPassword, signUp, signOut }}>
       {children}
     </AuthContext.Provider>
   );
