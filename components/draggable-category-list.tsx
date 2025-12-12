@@ -68,11 +68,11 @@ export default function DraggableCategoryList({
       }
     });
     
-    // Add "Inne" if it exists
-    if (categoryNames.includes('')) {
+    // Add "Inne" if it exists (check for both 'Inne' and empty string for backwards compatibility)
+    if (categoryNames.includes('Inne') || categoryNames.includes('')) {
       orderedCategories.push({
         id: 'uncategorized',
-        name: '',
+        name: 'Inne',
         displayName: 'Inne',
         shop_id: null,
         keywords: [],

@@ -57,7 +57,8 @@ export function groupItemsByCategory<T extends { category: string | null }>(
   items: T[]
 ): Record<string, T[]> {
   return items.reduce((acc, item) => {
-    const cat = item.category || 'Inne';
+    // Normalize empty string and null to 'Inne'
+    const cat = item.category && item.category.trim() !== '' ? item.category : 'Inne';
     if (!acc[cat]) acc[cat] = [];
     acc[cat].push(item);
     return acc;

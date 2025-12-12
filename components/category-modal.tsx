@@ -66,7 +66,7 @@ export default function CategoryModal({
               ))}
               <li>
                 <button
-                  onClick={() => handleSelect('')}
+                  onClick={() => handleSelect('Inne')}
                   className="w-full text-left px-4 py-3 rounded-lg border border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-colors duration-150"
                 >
                   <span className="text-gray-600 font-medium">Inne</span>
