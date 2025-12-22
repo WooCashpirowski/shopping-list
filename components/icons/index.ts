@@ -1,5 +1,6 @@
 export { ArrowLeftIcon } from './arrow-left-icon';
 export { CheckCircleIcon } from './check-circle-icon';
+export { ChevronDownIcon } from './chevron-down-icon';
 export { CloseIcon } from './close-icon';
 export { DragHandleIcon } from './drag-handle-icon';
 export { EditIcon } from './edit-icon';
