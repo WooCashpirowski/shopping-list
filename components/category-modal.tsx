@@ -31,7 +31,7 @@ export default function CategoryModal({
       {/* Container */}
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
         {/* Panel */}
-        <DialogPanel className="w-full max-w-md max-h-[80vh] flex flex-col bg-white rounded-lg shadow-xl">
+        <DialogPanel className="w-full max-w-md max-h-[80vh] flex flex-col bg-white rounded-sm shadow-xl">
           {/* Header */}
           <div className="flex justify-between items-start p-6 border-b">
             <div className="flex-1">
@@ -57,7 +57,7 @@ export default function CategoryModal({
                 <li key={cat.id}>
                   <button
                     onClick={() => handleSelect(cat.name)}
-                    className="w-full text-left px-4 py-3 rounded-lg border border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition-colors duration-150"
+                    className="w-full text-left px-4 py-3 rounded-sm border border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition-colors duration-150"
                   >
                     <span className="text-gray-900 font-medium">{cat.name}</span>
                   </button>
@@ -66,7 +66,7 @@ export default function CategoryModal({
               <li>
                 <button
                   onClick={() => handleSelect('Inne')}
-                  className="w-full text-left px-4 py-3 rounded-lg border border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-colors duration-150"
+                  className="w-full text-left px-4 py-3 rounded-sm border border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-colors duration-150"
                 >
                   <span className="text-gray-600 font-medium">Inne</span>
                 </button>

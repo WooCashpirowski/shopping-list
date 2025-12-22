@@ -23,24 +23,24 @@ export default function CategoriesPage() {
             <div className="mb-8">
             <div className="flex items-start justify-between mb-4 animate-pulse">
               <div className="h-9 w-80 bg-gray-200 rounded"></div>
-              <div className="w-12 h-10 bg-gray-200 rounded-lg"></div>
+              <div className="w-12 h-10 bg-gray-200 rounded-sm"></div>
             </div>
           </div>
 
           {/* Add Category Form Skeleton */}
-          <div className="mb-8 bg-white rounded-lg shadow p-4 animate-pulse">
+          <div className="mb-8 bg-white rounded-sm shadow p-4 animate-pulse">
             <div className="h-7 w-56 bg-gray-200 rounded mb-4"></div>
             <div className="space-y-4">
               <div>
                 <div className="h-4 w-32 bg-gray-200 rounded mb-1"></div>
-                <div className="h-10 w-full bg-gray-200 rounded-lg"></div>
+                <div className="h-10 w-full bg-gray-200 rounded-sm"></div>
               </div>
               <div>
                 <div className="h-4 w-48 bg-gray-200 rounded mb-1"></div>
-                <div className="h-20 w-full bg-gray-200 rounded-lg"></div>
+                <div className="h-20 w-full bg-gray-200 rounded-sm"></div>
                 <div className="h-3 w-96 bg-gray-100 rounded mt-1"></div>
               </div>
-              <div className="h-10 w-full bg-gray-200 rounded-lg"></div>
+              <div className="h-10 w-full bg-gray-200 rounded-sm"></div>
             </div>
           </div>
         </div>
@@ -54,7 +54,7 @@ export default function CategoriesPage() {
                 <h1 className="text-3xl font-bold text-gray-900">Zarządzanie kategoriami</h1>
                 <Link
                   href="/"
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-sm hover:bg-gray-50"
                 >
                   <ArrowLeftIcon />
 
@@ -63,13 +63,13 @@ export default function CategoriesPage() {
             </div>
 
             {/* Add Category Form */}
-            <div className="mb-8 bg-white rounded-lg shadow p-4">
+            <div className="mb-8 bg-white rounded-sm shadow p-4">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Dodaj nową kategorię</h2>
               <AddCategoryForm />
             </div>
 
             {/* Categories List */}
-            <div className="bg-white rounded-lg shadow p-4">
+            <div className="bg-white rounded-sm shadow p-4">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">
                 Kategorie ({categories.length})
               </h2>

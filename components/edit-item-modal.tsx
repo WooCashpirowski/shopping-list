@@ -34,7 +34,7 @@ export default function EditItemModal({
       <DialogBackdrop className="fixed inset-0 bg-black/30" />
 
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-        <DialogPanel className="w-full max-w-md bg-white rounded-lg shadow-xl">
+        <DialogPanel className="w-full max-w-md bg-white rounded-sm shadow-xl">
           <form onSubmit={handleSubmit}>
             {/* Header */}
             <div className="flex justify-between items-center p-6 border-b">
@@ -61,7 +61,7 @@ export default function EditItemModal({
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                   autoFocus
                 />
@@ -77,7 +77,7 @@ export default function EditItemModal({
                   value={qty}
                   onChange={(e) => setQty(e.target.value)}
                   placeholder="np. 2kg, 500g, 3szt"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
 
@@ -89,7 +89,7 @@ export default function EditItemModal({
                   id="edit-item-category"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   <option value="">Auto (automatyczna klasyfikacja)</option>
                   {categories.map((cat) => (
@@ -110,7 +110,7 @@ export default function EditItemModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+                className="flex-1 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-sm hover:bg-gray-50"
               >
                 Anuluj
               </button>

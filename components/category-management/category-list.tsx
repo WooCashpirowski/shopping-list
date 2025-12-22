@@ -63,7 +63,7 @@ export default function CategoryList({ categories, onEdit }: CategoryListProps) 
       {categories.map((category) => (
         <div
           key={category.id}
-          className="flex justify-between p-4 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors"
+          className="flex justify-between p-4 border border-gray-200 rounded-sm hover:border-gray-300 transition-colors overflow-hidden"
         >
           <div className="flex-1">
             <h3 className="font-semibold text-gray-900 mb-1">{category.name}</h3>
@@ -72,7 +72,7 @@ export default function CategoryList({ categories, onEdit }: CategoryListProps) 
                 {category.keywords.map((keyword, idx) => (
                   <span
                     key={idx}
-                    className="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded"
+                    className="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-xs"
                   >
                     {keyword}
                   </span>
@@ -88,7 +88,7 @@ export default function CategoryList({ categories, onEdit }: CategoryListProps) 
               type='button'
               onClick={() => onEdit(category)}
               size="sm"
-              className="mr-0.25 rounded-none"
+              className="mr-0.25 rounded-xs"
               title='Edytuj'
             >
               <EditIcon />
@@ -97,7 +97,7 @@ export default function CategoryList({ categories, onEdit }: CategoryListProps) 
               type='button'
               onClick={() => handleDelete(category)}
               disabled={deleteCategoryMutation.isPending}
-              className="px-3 py-1 text-sm font-medium bg-linear-65 from-red-500 to-pink-500 text-white rounded-tr-lg rounded-br-lg disabled:opacity-50 bg-yellow-200"
+              className="px-3 py-1 text-sm font-medium rounded-xs bg-linear-65 from-red-500 to-pink-500 text-white disabled:opacity-50 bg-yellow-200"
               title='Usuń'
             >
               <TrashIcon />

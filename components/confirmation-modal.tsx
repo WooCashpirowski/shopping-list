@@ -30,7 +30,7 @@ export default function ConfirmationModal({
     <Dialog open={isOpen} onClose={onCancel} className="relative z-50">
       <DialogBackdrop className="fixed inset-0 bg-black/30" />
       <div className="fixed inset-0 flex items-center justify-center p-4">
-        <DialogPanel className="mx-auto max-w-md rounded-lg bg-white p-6 shadow-xl">
+        <DialogPanel className="mx-auto max-w-md rounded-sm bg-white p-6 shadow-xl">
           <DialogTitle className="text-lg font-semibold text-gray-900 mb-4">
             {title}
           </DialogTitle>
@@ -43,7 +43,7 @@ export default function ConfirmationModal({
             <button
               onClick={onCancel}
               disabled={isLoading}
-              className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 font-medium disabled:opacity-50"
+              className="px-4 py-2 text-gray-700 bg-gray-100 rounded-sm hover:bg-gray-200 font-medium disabled:opacity-50"
             >
               {cancelText}
             </button>

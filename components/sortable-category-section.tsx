@@ -40,7 +40,7 @@ export default function SortableCategorySection({
   };
 
   return (
-    <div ref={setNodeRef} style={style} className="bg-white rounded-lg shadow-md flex overflow-hidden">
+    <div ref={setNodeRef} style={style} className="bg-white rounded-sm shadow-md flex overflow-hidden">
       {/* Draggable anchor */}
       <div className="cursor-grab active:cursor-grabbing touch-none select-none flex justify-center items-center px-1 bg-linear-to-b from-sky-300 to-indigo-100 rounded-tl-sm" {...attributes} {...listeners}>
         <DragHandleIcon />

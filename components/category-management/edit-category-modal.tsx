@@ -64,7 +64,7 @@ export default function EditCategoryModal({ category, onClose }: EditCategoryMod
       <DialogBackdrop className="fixed inset-0 bg-black/30" />
 
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-        <DialogPanel className="w-full max-w-md bg-white rounded-lg shadow-xl">
+        <DialogPanel className="w-full max-w-md bg-white rounded-sm shadow-xl">
           <form onSubmit={handleSubmit}>
             {/* Header */}
             <div className="flex justify-between items-center p-6 border-b">
@@ -91,7 +91,7 @@ export default function EditCategoryModal({ category, onClose }: EditCategoryMod
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                 />
               </div>
@@ -105,7 +105,7 @@ export default function EditCategoryModal({ category, onClose }: EditCategoryMod
                   value={keywords}
                   onChange={(e) => setKeywords(e.target.value)}
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
                 <p className="mt-1 text-xs text-gray-500">
                   Wprowadź słowa kluczowe oddzielone przecinkami.
@@ -124,7 +124,7 @@ export default function EditCategoryModal({ category, onClose }: EditCategoryMod
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+                className="flex-1 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-sm hover:bg-gray-50"
               >
                 Anuluj
               </button>

@@ -21,7 +21,7 @@ export default function AddItemForm({
   onSubmit,
 }: AddItemFormProps) {
   return (
-    <form onSubmit={onSubmit} className="bg-gray-50 p-4 rounded-lg shadow-lg/20">
+    <form onSubmit={onSubmit} className="bg-gray-50 p-4 rounded-sm shadow-lg/20">
       <div className="flex gap-2">
         <input
           type="text"

@@ -171,7 +171,7 @@ export default function ShoppingList() {
         </div>
 
         {/* Form Skeleton */}
-        <div className="bg-white p-4 rounded-lg shadow animate-pulse">
+        <div className="bg-white p-4 rounded-sm shadow animate-pulse">
           <div className="flex gap-2 flex-wrap">
             <div className="flex-1 min-w-[200px] h-10 bg-gray-200 rounded"></div>
             <div className="w-12 h-10 bg-gray-200 rounded"></div>
@@ -182,7 +182,7 @@ export default function ShoppingList() {
         {/* Categories Skeleton */}
         <div className="space-y-2">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-white rounded-lg shadow-md animate-pulse">
+            <div key={i} className="bg-white rounded-sm shadow-md animate-pulse">
               <div className="h-12 bg-gray-200 rounded-t-lg"></div>
               <div className="p-4 space-y-3">
                 <div className="h-8 bg-gray-100 rounded"></div>

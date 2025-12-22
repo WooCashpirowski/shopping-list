@@ -49,7 +49,7 @@ export default function AddCategoryForm() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="np. Owoce"
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           required
         />
       </div>
@@ -64,7 +64,7 @@ export default function AddCategoryForm() {
           onChange={(e) => setKeywords(e.target.value)}
           placeholder="np. jabłko, gruszka, banan, pomarańcza"
           rows={3}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
         <p className="mt-1 text-xs text-gray-500">
           Wprowadź słowa kluczowe oddzielone przecinkami. Produkty zawierające te słowa będą automatycznie przypisywane do tej kategorii.

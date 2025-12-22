@@ -92,7 +92,7 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="twoj@email.pl"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+              className="w-full px-4 py-3 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
               disabled={loading}
             />
           </div>
@@ -110,7 +110,7 @@ export default function LoginPage() {
                 required
                 placeholder="••••••••"
                 minLength={6}
-                className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 disabled={loading}
               />
               <button
@@ -155,7 +155,7 @@ export default function LoginPage() {
         {/* Message */}
         {message && (
           <div
-            className={`mt-4 p-4 rounded-lg ${
+            className={`mt-4 p-4 rounded-sm ${
               message.type === 'success'
                 ? 'bg-green-50 text-green-800 border border-green-200'
                 : 'bg-red-50 text-red-800 border border-red-200'
