@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import type { Category } from '@/types/database';
 import Button from '@/components/ui/button';
+import { CloseIcon } from '@/components/icons';
 
 interface EditCategoryModalProps {
   category: Category;
@@ -75,9 +76,7 @@ export default function EditCategoryModal({ category, onClose }: EditCategoryMod
                 onClick={onClose}
                 className="text-gray-400 hover:text-gray-600"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <CloseIcon />
               </button>
             </div>
 

@@ -8,6 +8,7 @@ import type { RealtimeChannel } from '@supabase/supabase-js';
 import Link from 'next/link';
 import Button from '@/components/ui/button';
 import { useShoppingListState } from '@/hooks/shopping-list.state';
+import { LogoutIcon } from '@/components/icons';
 import {
   useCategories,
   useItems,
@@ -27,6 +28,7 @@ import CategoryModal from './category-modal';
 import EditItemModal from './edit-item-modal';
 import ConfirmationModal from './confirmation-modal';
 import type { Item } from '@/types/database';
+import { ShoppingListActionType } from '@/types/shopping-list-actions';
 
 const USER_NAME = 'Użytkownik'; // W produkcji pobrać z autoryzacji
 
@@ -82,10 +84,10 @@ export default function ShoppingList() {
         category: autoCategory,
         created_by: USER_NAME,
       });
-      dispatch({ type: 'RESET_NEW_ITEM' });
+      dispatch({ type: ShoppingListActionType.RESET_NEW_ITEM });
     } else {
       dispatch({
-        type: 'SHOW_CATEGORY_MODAL',
+        type: ShoppingListActionType.SHOW_CATEGORY_MODAL,
         payload: { name: state.newItemName.trim(), qty: state.newItemQty.trim() },
       });
     }
@@ -96,7 +98,6 @@ export default function ShoppingList() {
 
     const { category } = await addItemWithLearning(
       state.pendingItem.name,
-      state.pendingItem.qty,
       selectedCategory,
       categories,
       (categoryId, keywords) => updateKeywordsMutation.mutate({ categoryId, keywords })
@@ -110,8 +111,8 @@ export default function ShoppingList() {
       created_by: USER_NAME,
     });
 
-    dispatch({ type: 'HIDE_CATEGORY_MODAL' });
-    dispatch({ type: 'RESET_NEW_ITEM' });
+    dispatch({ type: ShoppingListActionType.HIDE_CATEGORY_MODAL });
+    dispatch({ type: ShoppingListActionType.RESET_NEW_ITEM });
   };
 
   const handleUpdateItem = async (id: string, name: string, qty: string, category: string) => {
@@ -133,12 +134,12 @@ export default function ShoppingList() {
       },
     });
 
-    dispatch({ type: 'CANCEL_EDITING' });
+    dispatch({ type: ShoppingListActionType.CANCEL_EDITING });
   };
 
   const handleStartEditing = (item: Item) => {
     dispatch({
-      type: 'START_EDITING',
+      type: ShoppingListActionType.START_EDITING,
       payload: {
         id: item.id,
         name: item.name,
@@ -150,12 +151,12 @@ export default function ShoppingList() {
 
   const handleDeleteAllItems = () => {
     if (items.length === 0) return;
-    dispatch({ type: 'SHOW_DELETE_CONFIRMATION' });
+    dispatch({ type: ShoppingListActionType.SHOW_DELETE_CONFIRMATION });
   };
 
   const handleConfirmDeleteAll = () => {
     deleteAllItemsMutation.mutate();
-    dispatch({ type: 'HIDE_DELETE_CONFIRMATION' });
+    dispatch({ type: ShoppingListActionType.HIDE_DELETE_CONFIRMATION });
   };
 
   const groupedItems = groupItemsByCategory(items);
@@ -213,9 +214,7 @@ export default function ShoppingList() {
             onClick={() => signOut()}
             className="p-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-sm hover:bg-gray-50 transition-colors"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
-            </svg>
+            <LogoutIcon />
 
           </button>
         </div>
@@ -225,8 +224,8 @@ export default function ShoppingList() {
         itemName={state.newItemName}
         itemQty={state.newItemQty}
         isAdding={addItemMutation.isPending}
-        onItemNameChange={(value) => dispatch({ type: 'SET_NEW_ITEM_NAME', payload: value })}
-        onItemQtyChange={(value) => dispatch({ type: 'SET_NEW_ITEM_QTY', payload: value })}
+        onItemNameChange={(value) => dispatch({ type: ShoppingListActionType.SET_NEW_ITEM_NAME, payload: value })}
+        onItemQtyChange={(value) => dispatch({ type: ShoppingListActionType.SET_NEW_ITEM_QTY, payload: value })}
         onSubmit={handleAddItem}
       />
 
@@ -249,7 +248,7 @@ export default function ShoppingList() {
         itemName={state.pendingItem?.name || null}
         categories={categories}
         onSelectCategory={handleCategorySelection}
-        onClose={() => dispatch({ type: 'HIDE_CATEGORY_MODAL' })}
+        onClose={() => dispatch({ type: ShoppingListActionType.HIDE_CATEGORY_MODAL })}
       />
 
       {state.editingId && (
@@ -257,7 +256,7 @@ export default function ShoppingList() {
           item={items.find(item => item.id === state.editingId)!}
           categories={categories}
           onSave={handleUpdateItem}
-          onClose={() => dispatch({ type: 'CANCEL_EDITING' })}
+          onClose={() => dispatch({ type: ShoppingListActionType.CANCEL_EDITING })}
         />
       )}
       {items.length > 0 && (
@@ -281,7 +280,7 @@ export default function ShoppingList() {
         cancelText="Anuluj"
         variant="danger"
         onConfirm={handleConfirmDeleteAll}
-        onCancel={() => dispatch({ type: 'HIDE_DELETE_CONFIRMATION' })}
+        onCancel={() => dispatch({ type: ShoppingListActionType.HIDE_DELETE_CONFIRMATION })}
         isLoading={deleteAllItemsMutation.isPending}
       />
     </div>

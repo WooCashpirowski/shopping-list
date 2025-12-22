@@ -3,7 +3,6 @@ import { classifyItemLocally } from '@/lib/category-classifier';
 
 export async function addItemWithLearning(
   itemName: string,
-  itemQty: string,
   selectedCategory: string,
   categories: Category[],
   updateKeywords: (categoryId: string, keywords: string[]) => void

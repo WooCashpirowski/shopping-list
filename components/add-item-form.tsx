@@ -1,6 +1,7 @@
 'use client';
 
 import Button from '@/components/ui/button';
+import { PlusIcon } from '@/components/icons';
 
 interface AddItemFormProps {
   itemName: string;
@@ -21,7 +22,7 @@ export default function AddItemForm({
 }: AddItemFormProps) {
   return (
     <form onSubmit={onSubmit} className="bg-gray-50 p-4 rounded-lg shadow-lg/20">
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex gap-2">
         <input
           type="text"
           placeholder="Nazwa produktu"
@@ -38,13 +39,11 @@ export default function AddItemForm({
         />
         <Button
           type="submit"
+          className='rounded-sm'
           disabled={isAdding}
-          className="px-3 py-2 rounded flex items-center justify-center"
           title="Dodaj produkt"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-          </svg>
+          <PlusIcon />
         </Button>
       </div>
     </form>

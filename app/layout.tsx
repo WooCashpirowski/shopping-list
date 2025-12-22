@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Lista Zakupów',
-  description: 'Lista zakupów w czasie rzeczywistym dla dwóch osób',
+  description: 'Lista zakupów w czasie rzeczywistym',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,

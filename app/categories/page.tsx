@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useCategories } from '@/hooks/use-shopping-list';
 import Link from 'next/link';
+import { ArrowLeftIcon } from '@/components/icons';
 import CategoryList from '@/components/category-management/category-list';
 import AddCategoryForm from '@/components/category-management/add-category-form';
 import EditCategoryModal from '@/components/category-management/edit-category-modal';
@@ -55,9 +56,7 @@ export default function CategoriesPage() {
                   href="/"
                   className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-                  </svg>
+                  <ArrowLeftIcon />
 
                 </Link>
               </div>
