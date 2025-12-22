@@ -39,11 +39,13 @@ export default function SortableCategorySection({
     opacity: isDragging ? 0.5 : 1,
   };
 
+  const isCategorized = category?.name !== 'Inne';
+
   return (
     <div ref={setNodeRef} style={style} className="bg-white rounded-sm shadow-md flex overflow-hidden">
       {/* Draggable anchor */}
-      <div className="cursor-grab active:cursor-grabbing touch-none select-none flex justify-center items-center px-1 bg-linear-to-b from-sky-300 to-indigo-100 rounded-tl-sm" {...attributes} {...listeners}>
-        <DragHandleIcon />
+      <div className={`${isCategorized ? 'cursor-grab active:cursor-grabbing touch-none select-none' : 'w-8'} flex justify-center items-center px-1 bg-linear-to-b from-sky-300 to-indigo-100 rounded-tl-sm`} {...isCategorized && attributes} {...isCategorized && listeners}>
+        {isCategorized && <DragHandleIcon />}
       </div>
       <div className='flex-1'>
         {/* Header */}
