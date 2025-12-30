@@ -22,24 +22,41 @@ export interface Database {
         Row: {
           id: string;
           name: string;
-          shop_id: string | null;
           keywords: string[];
-          position: number;
           created_at: string;
         };
         Insert: {
           id?: string;
           name: string;
-          shop_id?: string | null;
           keywords?: string[];
-          position?: number;
           created_at?: string;
         };
         Update: {
           id?: string;
           name?: string;
-          shop_id?: string | null;
           keywords?: string[];
+          created_at?: string;
+        };
+      };
+      shop_category_positions: {
+        Row: {
+          id: string;
+          shop_id: string;
+          category_id: string;
+          position: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          shop_id: string;
+          category_id: string;
+          position: number;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          shop_id?: string;
+          category_id?: string;
           position?: number;
           created_at?: string;
         };
@@ -85,6 +102,9 @@ export interface Database {
 
 export type Shop = Database['public']['Tables']['shops']['Row'];
 export type Category = Database['public']['Tables']['categories']['Row'];
+export type ShopCategoryPosition = Database['public']['Tables']['shop_category_positions']['Row'];
 export type Item = Database['public']['Tables']['items']['Row'];
 export type InsertItem = Database['public']['Tables']['items']['Insert'];
 export type UpdateItem = Database['public']['Tables']['items']['Update'];
+
+export type CategoryWithPosition = Category & { position: number };

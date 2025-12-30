@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { useCategories } from '@/hooks/use-shopping-list';
-import Link from 'next/link';
-import { ArrowLeftIcon } from '@/components/icons';
+import AppMenu from '@/components/app-menu';
 import CategoryList from '@/components/category-management/category-list';
 import AddCategoryForm from '@/components/category-management/add-category-form';
 import EditCategoryModal from '@/components/category-management/edit-category-modal';
@@ -49,18 +48,10 @@ export default function CategoriesPage() {
         <div className="min-h-screen bg-gray-50 p-4">
           <div className="max-w-4xl mx-auto">
             {/* Header */}
-            <div className="mb-8">
               <div className="flex items-start justify-between mb-4">
-                <h1 className="text-3xl font-bold text-gray-900">Zarządzanie kategoriami</h1>
-                <Link
-                  href="/"
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-sm hover:bg-gray-50"
-                >
-                  <ArrowLeftIcon />
-
-                </Link>
+                <h1 className="text-2xl font-bold text-gray-900">Kategorie</h1>
+                <AppMenu />
               </div>
-            </div>
 
             {/* Add Category Form */}
             <div className="mb-8 bg-white rounded-sm shadow p-4">

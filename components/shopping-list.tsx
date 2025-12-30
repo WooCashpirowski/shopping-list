@@ -4,11 +4,10 @@ import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
+import { useShopContext } from '@/lib/shop-context';
 import type { RealtimeChannel } from '@supabase/supabase-js';
-import Link from 'next/link';
-import Button from '@/components/ui/button';
 import { useShoppingListState } from '@/hooks/shopping-list.state';
-import { LogoutIcon } from '@/components/icons';
+import AppMenu from '@/components/app-menu';
 import {
   useCategories,
   useItems,
@@ -18,7 +17,6 @@ import {
   useToggleDone,
   useDeleteAllItems,
   useUpdateCategoryKeywords,
-  SHOP_ID_CONSTANT,
 } from '@/hooks/use-shopping-list';
 import { classifyItemLocally } from '@/lib/category-classifier';
 import { addItemWithLearning, updateItemWithLearning, groupItemsByCategory } from '@/lib/shopping-list-helpers';
@@ -35,7 +33,8 @@ const USER_NAME = 'Użytkownik'; // W produkcji pobrać z autoryzacji
 export default function ShoppingList() {
   const [state, dispatch] = useShoppingListState();
   const queryClient = useQueryClient();
-  const { signOut, user } = useAuth();
+  const { user } = useAuth();
+  const { selectedShopId, selectedShop } = useShopContext();
 
   const { data: categories = [] } = useCategories();
   const { data: items = [], isLoading } = useItems();
@@ -56,11 +55,11 @@ export default function ShoppingList() {
           event: '*',
           schema: 'public',
           table: 'items',
-          filter: `shop_id=eq.${SHOP_ID_CONSTANT}`,
+          filter: `shop_id=eq.${selectedShopId}`,
         },
         (payload) => {
           console.info('Realtime update:', payload);
-          queryClient.invalidateQueries({ queryKey: ['items', SHOP_ID_CONSTANT] });
+          queryClient.invalidateQueries({ queryKey: ['items', selectedShopId] });
         }
       )
       .subscribe();
@@ -68,7 +67,7 @@ export default function ShoppingList() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [queryClient]);
+  }, [queryClient, selectedShopId]);
 
   const handleAddItem = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,7 +77,7 @@ export default function ShoppingList() {
     
     if (autoCategory) {
       addItemMutation.mutate({
-        shop_id: SHOP_ID_CONSTANT,
+        shop_id: selectedShopId,
         name: state.newItemName.trim(),
         qty: state.newItemQty.trim() || null,
         category: autoCategory,
@@ -104,7 +103,7 @@ export default function ShoppingList() {
     );
 
     addItemMutation.mutate({
-      shop_id: SHOP_ID_CONSTANT,
+      shop_id: selectedShopId,
       name: state.pendingItem.name,
       qty: state.pendingItem.qty || null,
       category,
@@ -167,7 +166,7 @@ export default function ShoppingList() {
         {/* Header Skeleton */}
         <div className="flex justify-between items-center animate-pulse">
           <div className="h-8 w-48 bg-gray-200 rounded"></div>
-          <div className="h-9 w-24 bg-gray-200 rounded-sm"></div>
+          <div className="h-8 w-8 bg-gray-200 rounded-sm"></div>
         </div>
 
         {/* Form Skeleton */}
@@ -198,26 +197,13 @@ export default function ShoppingList() {
 
   return (
     <div className="space-y-4 pb-[40px]">
-      {/* Header with logout and categories link */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-start">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Lista zakupów</h1>
+          <h1 className="text-2xl font-bold text-gray-900">{selectedShop?.name || 'Lista zakupów'}</h1>
           {user && <p className="text-sm text-gray-600">{user.email}</p>}
         </div>
-        <div className="flex gap-2">
-          <Link href="/categories">
-            <Button size="md" className="py-2 text-sm rounded-sm h-full">
-              Kategorie
-            </Button>
-          </Link>
-          <button
-            onClick={() => signOut()}
-            className="p-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-sm hover:bg-gray-50 transition-colors"
-          >
-            <LogoutIcon />
-
-          </button>
-        </div>
+        
+        <AppMenu />
       </div>
 
       <AddItemForm

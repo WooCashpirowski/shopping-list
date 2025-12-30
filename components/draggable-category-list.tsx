@@ -74,9 +74,7 @@ export default function DraggableCategoryList({
         id: 'uncategorized',
         name: 'Inne',
         displayName: 'Inne',
-        shop_id: null,
         keywords: [],
-        position: 999,
         created_at: new Date().toISOString(),
       });
     }
