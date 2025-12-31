@@ -1,6 +1,6 @@
 'use client';
 
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
+import Modal from '@/components/ui/modal';
 import Button from '@/components/ui/button';
 
 interface ConfirmationModalProps {
@@ -27,36 +27,34 @@ export default function ConfirmationModal({
   variant = 'primary',
 }: ConfirmationModalProps) {
   return (
-    <Dialog open={isOpen} onClose={onCancel} className="relative z-50">
-      <DialogBackdrop className="fixed inset-0 bg-black/30" />
-      <div className="fixed inset-0 flex items-center justify-center p-4">
-        <DialogPanel className="mx-auto max-w-md rounded-sm bg-white p-6 shadow-xl">
-          <DialogTitle className="text-lg font-semibold text-gray-900 mb-4">
-            {title}
-          </DialogTitle>
-          
-          <p className="text-gray-600 mb-6">
-            {message}
-          </p>
-
-          <div className="flex gap-3 justify-end">
-            <button
-              onClick={onCancel}
-              disabled={isLoading}
-              className="px-4 py-2 text-gray-700 bg-gray-100 rounded-sm hover:bg-gray-200 font-medium disabled:opacity-50"
-            >
-              {cancelText}
-            </button>
-            <Button
-              onClick={onConfirm}
-              disabled={isLoading}
-              variant={variant}
-            >
-              {isLoading ? 'Ładowanie...' : confirmText}
-            </Button>
-          </div>
-        </DialogPanel>
-      </div>
-    </Dialog>
+    <Modal
+      isOpen={isOpen}
+      onClose={onCancel}
+      title={title}
+      showCloseButton={false}
+      footer={
+        <>
+          <button
+            onClick={onCancel}
+            disabled={isLoading}
+            className="flex-1 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-sm hover:bg-gray-50"
+          >
+            {cancelText}
+          </button>
+          <Button
+            onClick={onConfirm}
+            disabled={isLoading}
+            variant={variant}
+            className="flex-1"
+          >
+            {isLoading ? 'Ładowanie...' : confirmText}
+          </Button>
+        </>
+      }
+    >
+      <p className="text-gray-600">
+        {message}
+      </p>
+    </Modal>
   );
 }

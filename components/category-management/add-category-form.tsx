@@ -12,11 +12,49 @@ export default function AddCategoryForm() {
 
   const addCategoryMutation = useMutation({
     mutationFn: async (data: { name: string; keywords: string[] }) => {
-      const { error } = await supabase
+      const { data: newCategory, error: categoryError } = await supabase
         .from('categories')
-        .insert({ name: data.name, keywords: data.keywords });
+        .insert({ name: data.name, keywords: data.keywords })
+        .select()
+        .single();
       
-      if (error) throw error;
+      if (categoryError) throw categoryError;
+
+      // Get all existing shops
+      const { data: shops, error: shopsError } = await supabase
+        .from('shops')
+        .select('id');
+      
+      if (shopsError) throw shopsError;
+
+      // Create position entries for all shops
+      if (shops && shops.length > 0 && newCategory) {
+        // Get the max position for each shop to append the new category at the end
+        const positionPromises = shops.map(async (shop) => {
+          const { data: positions } = await supabase
+            .from('shop_category_positions')
+            .select('position')
+            .eq('shop_id', shop.id)
+            .order('position', { ascending: false })
+            .limit(1);
+          
+          const maxPosition = positions && positions.length > 0 ? positions[0].position : -1;
+          
+          return {
+            shop_id: shop.id,
+            category_id: newCategory.id,
+            position: maxPosition + 1,
+          };
+        });
+
+        const positionsToInsert = await Promise.all(positionPromises);
+
+        const { error: positionsError } = await supabase
+          .from('shop_category_positions')
+          .insert(positionsToInsert);
+        
+        if (positionsError) throw positionsError;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['categories'] });

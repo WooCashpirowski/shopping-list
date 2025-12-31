@@ -1,7 +1,7 @@
 'use client';
 
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import { useState } from 'react';
+import Modal from '@/components/ui/modal';
 import Button from '@/components/ui/button';
 
 interface CreateShopModalProps {
@@ -33,48 +33,49 @@ export default function CreateShopModal({
   };
 
   return (
-    <Dialog open={isOpen} onClose={handleClose} className="relative z-50">
-      <DialogBackdrop className="fixed inset-0 bg-black/30" />
-      
-      <div className="fixed inset-0 flex items-center justify-center p-4">
-        <DialogPanel className="mx-auto max-w-md w-full rounded-lg bg-white p-6 shadow-xl">
-          <DialogTitle className="text-lg font-semibold text-gray-900 mb-4">
-            Nowa lista zakupów
-          </DialogTitle>
-          
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label htmlFor="shop-name" className="block text-sm font-medium text-gray-700 mb-2">
-                Nazwa listy
-              </label>
-              <input
-                id="shop-name"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="np. Lidl, Warzywniak, Urodziny..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                disabled={isLoading}
-                required
-              />
-            </div>
-
-            <div className="flex gap-3 justify-end">
-              <button
-                type="button"
-                onClick={handleClose}
-                disabled={isLoading}
-                className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 font-medium disabled:opacity-50"
-              >
-                Anuluj
-              </button>
-              <Button type="submit" disabled={isLoading || !name.trim()}>
-                {isLoading ? 'Tworzenie...' : 'Utwórz'}
-              </Button>
-            </div>
-          </form>
-        </DialogPanel>
-      </div>
-    </Dialog>
+    <Modal
+      isOpen={isOpen}
+      onClose={handleClose}
+      title="Nowa lista zakupów"
+      footer={
+        <>
+          <button
+            type="button"
+            onClick={handleClose}
+            disabled={isLoading}
+            className="flex-1 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-sm hover:bg-gray-50"
+          >
+            Anuluj
+          </button>
+          <Button
+            type="submit"
+            form="create-shop-form"
+            className="flex-1"
+            disabled={isLoading || !name.trim()}
+          >
+            {isLoading ? 'Tworzenie...' : 'Utwórz'}
+          </Button>
+        </>
+      }
+    >
+      <form id="create-shop-form" onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="shop-name" className="block text-sm font-medium text-gray-700 mb-1">
+            Nazwa listy
+          </label>
+          <input
+            id="shop-name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="np. Lidl, Warzywniak, Urodziny..."
+            className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            disabled={isLoading}
+            required
+            autoFocus
+          />
+        </div>
+      </form>
+    </Modal>
   );
 }

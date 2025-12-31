@@ -1,10 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
+import Modal from '@/components/ui/modal';
 import type { Item, Category } from '@/types/database';
 import Button from '@/components/ui/button';
-import { CloseIcon } from '@/components/icons';
 
 interface EditItemModalProps {
   item: Item;
@@ -30,97 +29,78 @@ export default function EditItemModal({
   };
 
   return (
-    <Dialog open={true} onClose={onClose} className="relative z-50">
-      <DialogBackdrop className="fixed inset-0 bg-black/30" />
+    <Modal
+      isOpen={true}
+      onClose={onClose}
+      title="Edytuj produkt"
+      footer={
+        <>
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex-1 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-sm hover:bg-gray-50"
+          >
+            Anuluj
+          </button>
+          <Button type="submit" form="edit-item-form" className="flex-1">
+            Zapisz
+          </Button>
+        </>
+      }
+    >
+      <form id="edit-item-form" onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="edit-item-name" className="block text-sm font-medium text-gray-700 mb-1">
+            Nazwa produktu
+          </label>
+          <input
+            id="edit-item-name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            required
+            autoFocus
+          />
+        </div>
+        
+        <div>
+          <label htmlFor="edit-item-qty" className="block text-sm font-medium text-gray-700 mb-1">
+            Ilość
+          </label>
+          <input
+            id="edit-item-qty"
+            type="text"
+            value={qty}
+            onChange={(e) => setQty(e.target.value)}
+            placeholder="np. 2kg, 500g, 3szt"
+            className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+        </div>
 
-      <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-        <DialogPanel className="w-full max-w-md bg-white rounded-sm shadow-xl">
-          <form onSubmit={handleSubmit}>
-            {/* Header */}
-            <div className="flex justify-between items-center p-6 border-b">
-              <DialogTitle className="text-xl font-semibold text-gray-900">
-                Edytuj produkt
-              </DialogTitle>
-              <button
-                type="button"
-                onClick={onClose}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                <CloseIcon />
-              </button>
-            </div>
-
-            {/* Content */}
-            <div className="p-6 space-y-4">
-              <div>
-                <label htmlFor="edit-item-name" className="block text-sm font-medium text-gray-700 mb-1">
-                  Nazwa produktu
-                </label>
-                <input
-                  id="edit-item-name"
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                  autoFocus
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="edit-item-qty" className="block text-sm font-medium text-gray-700 mb-1">
-                  Ilość
-                </label>
-                <input
-                  id="edit-item-qty"
-                  type="text"
-                  value={qty}
-                  onChange={(e) => setQty(e.target.value)}
-                  placeholder="np. 2kg, 500g, 3szt"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="edit-item-category" className="block text-sm font-medium text-gray-700 mb-1">
-                  Kategoria
-                </label>
-                <select
-                  id="edit-item-category"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="">Auto (automatyczna klasyfikacja)</option>
-                  {categories.map((cat) => (
-                    <option key={cat.id} value={cat.name}>
-                      {cat.name}
-                    </option>
-                  ))}
-                  <option value="">Inne</option>
-                </select>
-                <p className="mt-1 text-xs text-gray-500">
-                  Wybierz "Auto" aby system sam przypisał kategorię na podstawie nazwy produktu.
-                </p>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="flex gap-3 p-6 border-t bg-gray-50 rounded-b-lg">
-              <button
-                type="button"
-                onClick={onClose}
-                className="flex-1 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-sm hover:bg-gray-50"
-              >
-                Anuluj
-              </button>
-              <Button type="submit" className="flex-1">
-                Zapisz
-              </Button>
-            </div>
-          </form>
-        </DialogPanel>
-      </div>
-    </Dialog>
+        <div>
+          <label htmlFor="edit-item-category" className="block text-sm font-medium text-gray-700 mb-1">
+            Kategoria
+          </label>
+          <select
+            id="edit-item-category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="">Auto (automatyczna klasyfikacja)</option>
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.name}>
+                {cat.name}
+              </option>
+            ))}
+            <option value="">Inne</option>
+          </select>
+          <p className="mt-1 text-xs text-gray-500">
+            Wybierz "Auto" aby system sam przypisał kategorię na podstawie nazwy produktu.
+          </p>
+        </div>
+      </form>
+    </Modal>
   );
 }

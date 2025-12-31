@@ -58,7 +58,7 @@ export default function ShoppingList() {
           filter: `shop_id=eq.${selectedShopId}`,
         },
         (payload) => {
-          console.info('Realtime update:', payload);
+          console.info('Realtime update:', payload.eventType);
           queryClient.invalidateQueries({ queryKey: ['items', selectedShopId] });
         }
       )

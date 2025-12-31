@@ -23,14 +23,13 @@ export default function CategoryModal({
     onSelectCategory(categoryName);
   };
 
+  if (!isOpen) return null;
+
   return (
-    <Dialog open={isOpen} onClose={onClose} className="relative z-50">
-      {/* Backdrop */}
+    <Dialog open={true} onClose={onClose} className="relative z-50">
       <DialogBackdrop className="fixed inset-0 bg-black/30" />
 
-      {/* Container */}
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-        {/* Panel */}
         <DialogPanel className="w-full max-w-md max-h-[80vh] flex flex-col bg-white rounded-sm shadow-xl">
           {/* Header */}
           <div className="flex justify-between items-start p-6 border-b">
