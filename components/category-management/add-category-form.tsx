@@ -5,7 +5,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import Button from '@/components/ui/button';
 
-export default function AddCategoryForm() {
+interface AddCategoryFormProps {
+  onSuccess?: () => void;
+}
+
+export default function AddCategoryForm({ onSuccess }: AddCategoryFormProps = {}) {
   const [name, setName] = useState('');
   const [keywords, setKeywords] = useState('');
   const queryClient = useQueryClient();
@@ -60,6 +64,7 @@ export default function AddCategoryForm() {
       queryClient.invalidateQueries({ queryKey: ['categories'] });
       setName('');
       setKeywords('');
+      onSuccess?.();
     },
   });
 

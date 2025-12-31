@@ -11,6 +11,7 @@ interface ModalProps {
   footer?: React.ReactNode;
   size?: 'sm' | 'md' | 'lg';
   showCloseButton?: boolean;
+  contentStyles?: string;
 }
 
 const sizeClasses = {
@@ -27,6 +28,7 @@ export default function Modal({
   footer,
   size = 'md',
   showCloseButton = true,
+  contentStyles,
 }: ModalProps) {
   if (!isOpen) return null;
 
@@ -53,7 +55,7 @@ export default function Modal({
           </div>
 
           {/* Content */}
-          <div className="py-6">
+          <div className={contentStyles ?? "py-6"}>
             {children}
           </div>
 

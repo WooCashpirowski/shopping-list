@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
 import { LogoutIcon } from '@/components/icons';
@@ -14,7 +14,7 @@ export default function AppMenu() {
   const menuItems = [
     {
       href: '/list',
-      label: 'Lista',
+      label: 'Aktywna lista',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path

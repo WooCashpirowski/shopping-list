@@ -1,12 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
+import Modal from '@/components/ui/modal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import type { Category } from '@/types/database';
 import Button from '@/components/ui/button';
-import { CloseIcon } from '@/components/icons';
 
 interface EditCategoryModalProps {
   category: Category;
@@ -60,85 +59,68 @@ export default function EditCategoryModal({ category, onClose }: EditCategoryMod
   };
 
   return (
-    <Dialog open={true} onClose={onClose} className="relative z-50">
-      <DialogBackdrop className="fixed inset-0 bg-black/30" />
+    <Modal
+      isOpen={true}
+      onClose={onClose}
+      title="Edytuj kategorię"
+      footer={
+        <>
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex-1 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-sm hover:bg-gray-50"
+          >
+            Anuluj
+          </button>
+          <Button
+            type="submit"
+            form="edit-category-form"
+            disabled={updateCategoryMutation.isPending}
+            className="flex-1"
+          >
+            {updateCategoryMutation.isPending ? 'Zapisywanie...' : 'Zapisz'}
+          </Button>
+        </>
+      }
+    >
+      <form id="edit-category-form" onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="edit-category-name" className="block text-sm font-medium text-gray-700 mb-1">
+            Nazwa kategorii
+          </label>
+          <input
+            id="edit-category-name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            required
+            autoFocus
+          />
+        </div>
+        
+        <div>
+          <label htmlFor="edit-category-keywords" className="block text-sm font-medium text-gray-700 mb-1">
+            Słowa kluczowe (oddzielone przecinkami)
+          </label>
+          <textarea
+            id="edit-category-keywords"
+            value={keywords}
+            onChange={(e) => setKeywords(e.target.value)}
+            rows={4}
+            className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+          <p className="mt-1 text-xs text-gray-500">
+            Wprowadź słowa kluczowe oddzielone przecinkami.
+          </p>
+        </div>
 
-      <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-        <DialogPanel className="w-full max-w-md bg-white rounded-sm shadow-xl">
-          <form onSubmit={handleSubmit}>
-            {/* Header */}
-            <div className="flex justify-between items-center p-6 border-b">
-              <DialogTitle className="text-xl font-semibold text-gray-900">
-                Edytuj kategorię
-              </DialogTitle>
-              <button
-                type="button"
-                onClick={onClose}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                <CloseIcon />
-              </button>
-            </div>
-
-            {/* Content */}
-            <div className="p-6 space-y-4">
-              <div>
-                <label htmlFor="edit-category-name" className="block text-sm font-medium text-gray-700 mb-1">
-                  Nazwa kategorii
-                </label>
-                <input
-                  id="edit-category-name"
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="edit-category-keywords" className="block text-sm font-medium text-gray-700 mb-1">
-                  Słowa kluczowe (oddzielone przecinkami)
-                </label>
-                <textarea
-                  id="edit-category-keywords"
-                  value={keywords}
-                  onChange={(e) => setKeywords(e.target.value)}
-                  rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <p className="mt-1 text-xs text-gray-500">
-                  Wprowadź słowa kluczowe oddzielone przecinkami.
-                </p>
-              </div>
-
-              {updateCategoryMutation.isError && (
-                <p className="text-sm text-red-600">
-                  Błąd: {(updateCategoryMutation.error as Error).message}
-                </p>
-              )}
-            </div>
-
-            {/* Footer */}
-            <div className="flex gap-3 p-6 border-t bg-gray-50 rounded-b-lg">
-              <button
-                type="button"
-                onClick={onClose}
-                className="flex-1 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-sm hover:bg-gray-50"
-              >
-                Anuluj
-              </button>
-              <Button
-                type="submit"
-                disabled={updateCategoryMutation.isPending}
-                className="flex-1"
-              >
-                {updateCategoryMutation.isPending ? 'Zapisywanie...' : 'Zapisz'}
-              </Button>
-            </div>
-          </form>
-        </DialogPanel>
-      </div>
-    </Dialog>
+        {updateCategoryMutation.isError && (
+          <p className="text-sm text-red-600">
+            Błąd: {(updateCategoryMutation.error as Error).message}
+          </p>
+        )}
+      </form>
+    </Modal>
   );
 }

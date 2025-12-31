@@ -4,14 +4,16 @@ import { useState } from 'react';
 import { useCategories } from '@/hooks/use-shopping-list';
 import AppMenu from '@/components/app-menu';
 import CategoryList from '@/components/category-management/category-list';
-import AddCategoryForm from '@/components/category-management/add-category-form';
+import AddCategoryModal from '@/components/category-management/add-category-modal';
 import EditCategoryModal from '@/components/category-management/edit-category-modal';
 import { ProtectedRoute } from '@/components/protected-route';
+import { PlusIcon } from '@/components/icons';
 import type { Category } from '@/types/database';
 
 export default function CategoriesPage() {
   const { data: categories = [], isLoading } = useCategories();
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   return (
     <ProtectedRoute>
@@ -48,30 +50,39 @@ export default function CategoriesPage() {
         <div className="min-h-screen bg-gray-50 p-4">
           <div className="max-w-4xl mx-auto">
             {/* Header */}
-              <div className="flex items-start justify-between mb-4">
-                <h1 className="text-2xl font-bold text-gray-900">Kategorie</h1>
+              <div className="flex items-start justify-between mb-6">
+                <h1 className="text-2xl font-bold text-gray-900">Kategorie ({categories.length})</h1>
                 <AppMenu />
               </div>
 
-            {/* Add Category Form */}
-            <div className="mb-8 bg-white rounded-sm shadow p-4">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Dodaj nową kategorię</h2>
-              <AddCategoryForm />
+            {/* Add Category Tile Button */}
+            <div className="mb-4">
+              <button
+                onClick={() => setShowAddModal(true)}
+                className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all p-6 border-2 border-dashed border-gray-300 hover:border-blue-500 flex flex-col items-center justify-center min-h-[140px] group w-full"
+              >
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3 group-hover:bg-blue-200 transition-colors">
+                  <PlusIcon className='w-6 h-6 text-blue-600'/>
+                </div>
+                <span className="text-gray-600 font-medium group-hover:text-blue-600 transition-colors">
+                  Dodaj kategorię
+                </span>
+              </button>
             </div>
 
             {/* Categories List */}
-            <div className="bg-white rounded-sm shadow p-4">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                Kategorie ({categories.length})
-              </h2>
-              <CategoryList
-                categories={categories}
-                onEdit={setEditingCategory}
-              />
-            </div>
+            <CategoryList
+              categories={categories}
+              onEdit={setEditingCategory}
+            />
           </div>
 
-          {/* Edit Modal */}
+          {/* Modals */}
+          <AddCategoryModal
+            isOpen={showAddModal}
+            onClose={() => setShowAddModal(false)}
+          />
+
           {editingCategory && (
             <EditCategoryModal
               category={editingCategory}
