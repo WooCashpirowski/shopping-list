@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { format } from 'date-fns';
+import { pl } from 'date-fns/locale';
 import { useShops, useCreateShop, useDeleteShop, useUpdateShop } from '@/hooks/use-shopping-list';
 import { useShopContext } from '@/lib/shop-context';
 import { ProtectedRoute } from '@/components/protected-route';
@@ -102,7 +104,7 @@ export default function Home() {
                     {shop.name}
                   </h3>
                   <p className="text-sm text-gray-500">
-                    {new Date(shop.created_at).toLocaleDateString('pl-PL')}
+                    {format(new Date(shop.updated_at || shop.created_at), "d MMM yyyy, 'godz.' HH:mm", { locale: pl })}
                   </p>
                 </button>
 
