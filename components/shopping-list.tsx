@@ -47,6 +47,8 @@ export default function ShoppingList() {
 
   // Realtime subscription
   useEffect(() => {
+    if (!selectedShopId) return;
+
     const channel: RealtimeChannel = supabase
       .channel('items-changes')
       .on(
@@ -71,7 +73,7 @@ export default function ShoppingList() {
 
   const handleAddItem = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!state.newItemName.trim()) return;
+    if (!state.newItemName.trim() || !selectedShopId) return;
 
     const autoCategory = classifyItemLocally(state.newItemName, categories);
     
@@ -93,7 +95,7 @@ export default function ShoppingList() {
   };
 
   const handleCategorySelection = async (selectedCategory: string) => {
-    if (!state.pendingItem) return;
+    if (!state.pendingItem || !selectedShopId) return;
 
     const { category } = await addItemWithLearning(
       state.pendingItem.name,

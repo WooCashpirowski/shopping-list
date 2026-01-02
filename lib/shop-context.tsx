@@ -4,12 +4,11 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { supabase } from '@/lib/supabase';
 import type { Shop } from '@/types/database';
 
-const DEFAULT_SHOP_ID = '00000000-0000-0000-0000-000000000001';
-
 interface ShopContextType {
   selectedShop: Shop | null;
-  selectedShopId: string;
+  selectedShopId: string | null;
   setSelectedShop: (shop: Shop) => void;
+  clearSelectedShop: () => void;
   isLoading: boolean;
 }
 
@@ -21,30 +20,22 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const loadShop = async () => {
-      // Load selected shop from localStorage or use default
+      // Load selected shop from localStorage
       const storedShopId = localStorage.getItem('selectedShopId');
-      const shopId = storedShopId || DEFAULT_SHOP_ID;
       
-      // Fetch the actual shop data from database
-      const { data } = await supabase
-        .from('shops')
-        .select('*')
-        .eq('id', shopId)
-        .single();
-      
-      if (data) {
-        setSelectedShopState(data);
-      } else {
-        // Fallback to default if shop not found
-        const { data: defaultShop } = await supabase
+      if (storedShopId) {
+        // Fetch the actual shop data from database
+        const { data } = await supabase
           .from('shops')
           .select('*')
-          .eq('id', DEFAULT_SHOP_ID)
+          .eq('id', storedShopId)
           .single();
         
-        if (defaultShop) {
-          setSelectedShopState(defaultShop);
-          localStorage.setItem('selectedShopId', DEFAULT_SHOP_ID);
+        if (data) {
+          setSelectedShopState(data);
+        } else {
+          // Shop no longer exists, clear localStorage
+          localStorage.removeItem('selectedShopId');
         }
       }
       
@@ -59,12 +50,18 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('selectedShopId', shop.id);
   };
 
+  const clearSelectedShop = () => {
+    setSelectedShopState(null);
+    localStorage.removeItem('selectedShopId');
+  };
+
   return (
     <ShopContext.Provider
       value={{
         selectedShop,
-        selectedShopId: selectedShop?.id || DEFAULT_SHOP_ID,
+        selectedShopId: selectedShop?.id || null,
         setSelectedShop,
+        clearSelectedShop,
         isLoading,
       }}
     >

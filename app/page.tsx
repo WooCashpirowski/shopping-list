@@ -20,7 +20,7 @@ export default function Home() {
   const createShopMutation = useCreateShop();
   const deleteShopMutation = useDeleteShop();
   const updateShopMutation = useUpdateShop();
-  const { setSelectedShop } = useShopContext();
+  const { setSelectedShop, selectedShop, clearSelectedShop } = useShopContext();
   
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [shopToDelete, setShopToDelete] = useState<Shop | null>(null);
@@ -29,7 +29,6 @@ export default function Home() {
   const handleCreateShop = async (name: string) => {
     const newShop = await createShopMutation.mutateAsync(name);
     setShowCreateModal(false);
-    // Optionally switch to the new shop and navigate
     setSelectedShop(newShop);
     router.push('/list');
   };
@@ -41,6 +40,9 @@ export default function Home() {
 
   const handleDeleteShop = () => {
     if (shopToDelete) {
+      if (selectedShop?.id === shopToDelete.id) {
+        clearSelectedShop();
+      }
       deleteShopMutation.mutate(shopToDelete.id);
       setShopToDelete(null);
     }

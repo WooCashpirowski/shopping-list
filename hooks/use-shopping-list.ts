@@ -21,6 +21,14 @@ export function useCategories(shopId?: string) {
       
       if (catError) throw catError;
       
+      // If no shop is selected, return categories without shop-specific positions
+      if (!effectiveShopId) {
+        return categories.map((cat, index) => ({
+          ...cat,
+          position: index,
+        })) as CategoryWithPosition[];
+      }
+      
       // Fetch shop-specific positions
       const { data: positions, error: posError } = await supabase
         .from('shop_category_positions')

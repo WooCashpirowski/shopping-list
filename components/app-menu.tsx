@@ -4,17 +4,19 @@ import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
+import { useShopContext } from '@/lib/shop-context';
 import { LogoutIcon } from '@/components/icons';
 
 export default function AppMenu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { signOut } = useAuth();
+  const { selectedShop } = useShopContext();
   const pathname = usePathname();
 
   const menuItems = [
     {
       href: '/list',
-      label: 'Aktywna lista',
+      label: selectedShop?.name,
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -56,8 +58,15 @@ export default function AppMenu() {
     },
   ];
 
-  // Filter out current page
-  const visibleMenuItems = menuItems.filter(item => item.href !== pathname);
+  const visibleMenuItems = menuItems.filter(item => {
+    if (item.href !== pathname) {
+      if (item.href === '/list' && !selectedShop) {
+        return false;
+      }
+      return true;
+    }
+    return false;
+  });
 
   return (
     <div className="relative">
